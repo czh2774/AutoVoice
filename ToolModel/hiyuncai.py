@@ -26,6 +26,31 @@ class hiyuncai():
                      'Hm_lvt_8189975adf5a41c4bcd46ea137aed48c':'1556544330,1556723397,1557532449,1557736563',
                      'Hm_lpvt_8189975adf5a41c4bcd46ea137aed48c':'1557737068'
                      }
+    def login_do(self):
+        url='https://jw-api.myspgame.com/user/login.do'
+        header={'Host': 'jw-api.myspgame.com',
+                'Connection': 'keep-alive',
+                'Content-Length': '85',
+                'Accept': 'application/json, text/plain, */*',
+                'Origin': 'http://www.hiyuncai.vip',
+                'X-Requested-With': 'XMLHttpRequest',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.157 Safari/537.36',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Referer': 'http://www.hiyuncai.vip/',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Accept-Language': 'zh-CN,zh;q=0.9'
+                }
+        cookies={'JSESSIONID':'515f15f0-5067-4615-aea5-c8d838cb417f'}
+        data={'userName':'admin54478',
+              'passWord':'af09f4d4cc896f1ceb2496105185401b',
+              'domain':'www.hiyuncai.vip'
+              }
+        value=requests.post(url=url,
+                            headers=header,
+                            cookies=cookies,
+                            data=data)
+        value=value.cookies
+        print(value)
     def waitForTicket(self):
         url='http://www.hiyuncai.vip/view/lottery/waitForTicket.html?t=6a20dc9309b999ea0dfa25be86b3eec3'
         header={'Host': 'www.hiyuncai.vip',
@@ -80,7 +105,7 @@ class hiyuncai():
                 'Accept-Language': 'zh-CN,zh;q=0.9',
 
                 }
-        cookie={'JSESSIONID':'515f15f0-5067-4615-aea5-c8d838cb417f'}
+        cookie={'JSESSIONID':'c7018443-4208-4628-ab61-ed5d2cac13e9'}
         # data='pageNo=1&pageSize=60&dateSort=&priceSort=&userName=&ticketId=&domain=www.hiyuncai.vip'
         data={'pageNo':'1',
             'pageSize':'60',
@@ -118,7 +143,7 @@ class hiyuncai():
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'zh-CN,zh;q=0.9'
                 }
-        cookie={'JSESSIONID':'515f15f0-5067-4615-aea5-c8d838cb417f'}
+        cookie={'JSESSIONID':'c7018443-4208-4628-ab61-ed5d2cac13e9'}
         ticketId_list=self.pending_post()
         id_list=[]
 
@@ -144,7 +169,7 @@ class hiyuncai():
 
     def handle_post(self):
         url='https://jw-api.myspgame.com/order/handle.do'
-        url1='https://jw-api.myspgame.com/order/wait.do'
+        url1='https://jw-api.myspgame.com/ticket/handle.do'
         headers={'Host': 'jw-api.myspgame.com',
                 'Connection': 'keep-alive',
                 'Accept': 'application/json, text/plain, */*',
@@ -156,7 +181,7 @@ class hiyuncai():
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'zh-CN,zh;q=0.9'
                 }
-        cookie = {'JSESSIONID': 'fdb444d6-8556-44f9-affc-7fc19ffdd548'}
+        cookie = {'JSESSIONID': 'c7018443-4208-4628-ab61-ed5d2cac13e9'}
         id_list=self.orderid_post()
         for i in id_list:
             data={'orderIds':i['applyid'],
@@ -165,18 +190,21 @@ class hiyuncai():
                   }
             value=requests.post(url=url,data=data,cookies=cookie,headers=headers)
             print(value.text)
-            data1={'pageNo':'1',
-                   'pageSize':'30',
-                   'ticketId': i['betId']}
+            data1 = {'equipment': '',
+                     'equipmentCode': '',
+                     'equipmentType': '3',
+                     'ticketIds': i['betId'],
+                     'ticketStatus': '3'}
             value1=requests.post(url=url1,data=data1,cookies=cookie,headers=headers)
             print(value1.text)
             time.sleep(15)
 
     def wait_post(self):
         url='https://jw-api.myspgame.com/order/wait.do'
+        url1='https://jw-api.myspgame.com/ticket/handle.do'
         headers={'Host': 'jw-api.myspgame.com',
                 'Connection': 'keep-alive',
-                'Content-Length': '39',
+
                 'Accept': 'application/json, text/plain, */*',
                 'Origin': 'http://www.hiyuncai.vip',
                 'X-Requested-With': 'XMLHttpRequest',
@@ -186,21 +214,38 @@ class hiyuncai():
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'zh-CN,zh;q=0.9'
                 }
-        cookies={'JSESSIONID':'515f15f0-5067-4615-aea5-c8d838cb417f'}
+        cookies={'JSESSIONID':'c7018443-4208-4628-ab61-ed5d2cac13e9'}
         data={'pageNo':'1',
               'pageSize':'30',
-              'ticketId':'259077911'
+              'ticketId':'257464208'
               }
-        value=requests.post(url=url,headers=headers,cookies=cookies)
-        value=value.text
-        print(value)
+        data1={'equipment':'',
+              'equipmentCode':'',
+               'equipmentType':'3',
+              'ticketIds':'257441689',
+               'ticketStatus':'3'}
+        # value=requests.post(url=url,
+        #                     headers=headers,
+        #                     cookies=cookies,
+        #                     data=data)
+        # value=value.text
+        # print(value)
+        value1=requests.post(url=url1,
+                             headers=headers,
+                             cookies=cookies,
+                             data=data1)
+        value1=value1.text
+        print(value1)
 if __name__ == "__main__":
     data=hiyuncai()
+    #data.login_do()
     #data.waitForTicket()
     #data.pending_options()
-    data.pending_post()
-    data.orderid_post()
+    #data.pending_post()
+    #data.orderid_post()
 
 
-    #data.handle_post()
 
+    data.handle_post()
+
+    #data.wait_post()

@@ -76,3 +76,8 @@ class log_voice(models.Model):
 
     add_date = models.DateTimeField(verbose_name='保存日期', default=timezone.now)
     mod_date = models.DateTimeField(verbose_name='最后修改日期', auto_now=True)
+
+class cookies_hiyuncai(models.Model):
+    cookies = models.CharField(max_length=255, verbose_name='cookies')
+
+#class data_hiyuncai(models.Model):
