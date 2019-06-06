@@ -13,6 +13,8 @@ from ToolModel.models import note
 from ToolModel.models import proxyip
 from ToolModel.models import rid
 from ToolModel.models import log_voice
+from ToolModel.models import bifen_mofang
+from ToolModel.models import zuqiumofang_user
 # Register your models here.
 
 # Blog模型的管理器
@@ -40,3 +42,10 @@ class BlogAdmin(admin.ModelAdmin):
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('log_title', 'log_data','add_date','mod_date')
 
+@admin.register(bifen_mofang)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('match_id','name_league','time','status','home_name','home_ranking','matchhomescore','away_name','away_ranking','matchawayscore','add_date','mod_date')
+
+@admin.register(zuqiumofang_user)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('user_id','username','has_game','is_author','is_follow','rc','wc','bc','rr','sr','vote_number','poster')

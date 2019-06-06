@@ -40,7 +40,7 @@ class hiyuncai():
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'zh-CN,zh;q=0.9'
                 }
-        cookies={'JSESSIONID':'515f15f0-5067-4615-aea5-c8d838cb417f'}
+        cookies={'JSESSIONID':'7ca34651-aa9d-4746-9dcd-5b7f40883c4b'}
         data={'userName':'admin54478',
               'passWord':'af09f4d4cc896f1ceb2496105185401b',
               'domain':'www.hiyuncai.vip'
@@ -105,7 +105,7 @@ class hiyuncai():
                 'Accept-Language': 'zh-CN,zh;q=0.9',
 
                 }
-        cookie={'JSESSIONID':'c7018443-4208-4628-ab61-ed5d2cac13e9'}
+        cookie={'JSESSIONID':'7ca34651-aa9d-4746-9dcd-5b7f40883c4b'}
         # data='pageNo=1&pageSize=60&dateSort=&priceSort=&userName=&ticketId=&domain=www.hiyuncai.vip'
         data={'pageNo':'1',
             'pageSize':'60',
@@ -143,7 +143,7 @@ class hiyuncai():
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'zh-CN,zh;q=0.9'
                 }
-        cookie={'JSESSIONID':'c7018443-4208-4628-ab61-ed5d2cac13e9'}
+        cookie={'JSESSIONID':'7ca34651-aa9d-4746-9dcd-5b7f40883c4b'}
         ticketId_list=self.pending_post()
         id_list=[]
 
@@ -181,7 +181,7 @@ class hiyuncai():
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'zh-CN,zh;q=0.9'
                 }
-        cookie = {'JSESSIONID': 'c7018443-4208-4628-ab61-ed5d2cac13e9'}
+        cookie = {'JSESSIONID': '7ca34651-aa9d-4746-9dcd-5b7f40883c4b'}
         id_list=self.orderid_post()
         for i in id_list:
             data={'orderIds':i['applyid'],
@@ -214,7 +214,7 @@ class hiyuncai():
                 'Accept-Encoding': 'gzip, deflate, br',
                 'Accept-Language': 'zh-CN,zh;q=0.9'
                 }
-        cookies={'JSESSIONID':'c7018443-4208-4628-ab61-ed5d2cac13e9'}
+        cookies={'JSESSIONID':'7ca34651-aa9d-4746-9dcd-5b7f40883c4b'}
         data={'pageNo':'1',
               'pageSize':'30',
               'ticketId':'257464208'
@@ -245,7 +245,7 @@ if __name__ == "__main__":
     #data.orderid_post()
 
 
-
-    data.handle_post()
-
+    while True:
+        data.handle_post()
+        time.sleep(60)
     #data.wait_post()

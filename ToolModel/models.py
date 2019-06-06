@@ -80,4 +80,37 @@ class log_voice(models.Model):
 class cookies_hiyuncai(models.Model):
     cookies = models.CharField(max_length=255, verbose_name='cookies')
 
+class bifen_mofang(models.Model):
+    class Meta:
+        verbose_name='足球魔方比分数据'
+        verbose_name_plural='足球魔方比分数据'
+    match_id=models.CharField(max_length=255,primary_key=True,verbose_name='比赛ID')
+    name_league=models.CharField(max_length=255,null=True,blank=True,verbose_name='联赛名称')
+    time=models.CharField(max_length=255,null=True,blank=True,verbose_name='比赛时间')
+    status=models.CharField(max_length=255,null=True,blank=True,verbose_name='比赛状态')
+    home_name=models.CharField(max_length=255,null=True,blank=True,verbose_name='主队名称')
+    home_ranking=models.CharField(max_length=255,null=True,blank=True,verbose_name='主队排名')
+    matchhomescore=models.CharField(max_length=255,null=True,blank=True,verbose_name='主队得分')
+    away_name=models.CharField(max_length=255,null=True,blank=True,verbose_name='客队名称')
+    away_ranking=models.CharField(max_length=255,null=True,blank=True,verbose_name='客队排名')
+    matchawayscore=models.CharField(max_length=255,null=True,blank=True,verbose_name='客队得分')
+    add_date = models.DateTimeField(verbose_name='保存日期', default=timezone.now)
+    mod_date = models.DateTimeField(verbose_name='最后修改日期', auto_now=True)
 #class data_hiyuncai(models.Model):
+class zuqiumofang_user(models.Model):
+    class Meta:
+        verbose_name = '足球财富排行榜'
+        verbose_name_plural = '足球财富排行榜'
+
+    user_id =models.CharField(max_length=255,primary_key=True,verbose_name='作者ID')
+    username = models.CharField(max_length=255, null=True, blank=True, verbose_name='作者名称')
+    has_game=models.CharField(max_length=255,null=True,blank=True,verbose_name='？？')
+    is_author=models.CharField(max_length=255,null=True,blank=True,verbose_name='？？')
+    is_follow=models.CharField(max_length=255,null=True,blank=True,verbose_name='是否关注')
+    rc=models.CharField(max_length=255,null=True,blank=True,verbose_name='红')
+    wc = models.CharField(max_length=255, null=True, blank=True, verbose_name='走')
+    bc = models.CharField(max_length=255, null=True, blank=True, verbose_name='黑')
+    rr=models.CharField(max_length=255,null=True,blank=True,verbose_name='周返还率')
+    sr=models.CharField(max_length=255,null=True,blank=True,verbose_name='周胜率')
+    vote_number=models.CharField(max_length=255,null=True,blank=True,verbose_name='票数')
+    poster = models.CharField(max_length=255, null=True, blank=True, verbose_name='？？')
