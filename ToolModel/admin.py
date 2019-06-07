@@ -15,6 +15,7 @@ from ToolModel.models import rid
 from ToolModel.models import log_voice
 from ToolModel.models import bifen_mofang
 from ToolModel.models import zuqiumofang_user
+from ToolModel.models import zuqiumofang_post
 # Register your models here.
 
 # Blog模型的管理器
@@ -48,4 +49,7 @@ class BlogAdmin(admin.ModelAdmin):
 
 @admin.register(zuqiumofang_user)
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('user_id','username','has_game','is_author','is_follow','rc','wc','bc','rr','sr','vote_number','poster')
+    list_display = ('user_id','username','has_game','is_author','is_follow','rc','wc','bc','rr','sr','vote_number','poster','ranking')
+@admin.register(zuqiumofang_post)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('post_id','user_id','username','content','create_time','strandlist','ranking')
