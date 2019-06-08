@@ -149,8 +149,11 @@ LOGGING = {
 CRONJOBS = [
     ('*/5 * * * *', 'django.core.management.call_command',['check_ip'],{}),
     ('*/10 * * * *', 'django.core.management.call_command',['get_ip'],{}),
-    ('*/6 * * * *', 'django.core.management.call_command',['get_rid_list'],{})
-]
+    ('*/6 * * * *', 'django.core.management.call_command',['get_rid_list'],{}),
+    ('0 0 * * *', 'django.core.management.call_command',['rankings_list'],{}),
+    ('*/30 * * * *', 'django.core.management.call_command',['userpostlist'],{}),
+    ('*/20 * * * *', 'django.core.management.call_command',['detail'],{}),
+    ]
 # EMAIL_HOST = 'smtp.qq.com'
 # EMAIL_PORT = 25
 # EMAIL_HOST_USER = '9366741@qq.com' # 你的 QQ 账号

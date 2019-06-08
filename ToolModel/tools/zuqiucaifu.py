@@ -147,7 +147,7 @@ class zuqiucaifu():
             try:
                 gamelist=value['data']['gameList']
             except:
-                gamelist='None'
+                gamelist=''
             _t=db.get(post_id=i['post_id'])
             _t.strandlist=str(gamelist)
             _t.is_active=True
@@ -159,27 +159,28 @@ class zuqiucaifu():
         toy_list = ['rq_rq3_checked',
                     'rq_rq1_checked',
                     'rq_rq0_checked',
-                    # 'sf_sf3_checked',
-                    # 'sf_sf1_checked',
-                    # 'sf_sf0_checked',
-                    # 'jc_yz_hjspl_checked',
-                    # 'jc_yz_wjspl_checked',
-                    # 'bd_yz_hjspl_checked',
-                    # 'bd_yz_wjspl_checked',
+                    'sf_sf3_checked',
+                    'sf_sf1_checked',
+                    'sf_sf0_checked',
+                    'jc_yz_hjspl_checked',
+                    'jc_yz_wjspl_checked',
+                    'bd_yz_hjspl_checked',
+                    'bd_yz_wjspl_checked',
                     'spf_sf1_checked',
                     'spf_sf0_checked',
                     'spf_sf3_checked'
                     ]
         strandlist=post_db.values('strandlist','post_id','user_id').filter(~Q(strandlist=[]))
         for j in strandlist:
-
+            print(j)
             value=j['strandlist']
             value=value.replace("'",'"')
+            print(value)
             value=json.loads(value)
 
-            for o in value:
-                data=o
-                if 'strandList' not in o:
+            for data in value:
+
+                if 'strandList' not in data:
 
                     tuijian_data = {}
                     tuijian_data['post_id']=j['post_id']
@@ -191,7 +192,7 @@ class zuqiucaifu():
                     tuijian_data['create_time'] = data['create_time']
 
                     user_data = user_db.values('ranking', 'rc', 'wc', 'bc').filter(user_id=j['user_id'])
-                    print(user_data)
+                    #print(user_data)
                     ranking = user_data[0]['ranking']
                     rc = user_data[0]['rc']
                     wc = user_data[0]['wc']
@@ -227,7 +228,7 @@ class zuqiucaifu():
                         tuijian_data['create_time'] = data['create_time']
 
                         user_data=user_db.values('ranking','rc','wc','bc').filter(user_id=j['user_id'])
-                        print(user_data)
+                        #print(user_data)
                         ranking=user_data[0]['ranking']
                         rc=user_data[0]['rc']
                         wc=user_data[0]['wc']
@@ -241,7 +242,7 @@ class zuqiucaifu():
                         for g in toy_list:
                             if g in data and data[g] == 1:
                                 tuijian_data['tuijian'].append(g)
-                        print('多选',tuijian_data)
+                        #print('多选',tuijian_data)
                         try:
                             tuijian_db.get(create_time=tuijian_data['create_time'])
 
@@ -254,13 +255,13 @@ class zuqiucaifu():
         toy_list = {'rq_rq3_checked':'让球胜',
                     'rq_rq1_checked':'让球平',
                     'rq_rq0_checked':'让球负',
-                    #'sf_sf3_checked':'胜',
-                    #'sf_sf1_checked':'平',
-                    #'sf_sf0_checked':'负',
-                    #'jc_yz_hjspl_checked':'亚盘主受让',
-                    #'jc_yz_wjspl_checked':'亚盘客受让',
-                    #'bd_yz_hjspl_checked':'主让',
-                    #'bd_yz_wjspl_checked':'客让',
+                    'sf_sf3_checked':'胜',
+                    'sf_sf1_checked':'平',
+                    'sf_sf0_checked':'负',
+                    'jc_yz_hjspl_checked':'亚盘主受让',
+                    'jc_yz_wjspl_checked':'亚盘客受让',
+                    'bd_yz_hjspl_checked':'主让',
+                    'bd_yz_wjspl_checked':'客让',
                     'spf_sf3_checked':'胜',
                     'spf_sf1_checked':'平',
                     'spf_sf0_checked':'负'
@@ -269,7 +270,7 @@ class zuqiucaifu():
         user_db=models.zuqiumofang_user.objects
         tuijian_db=models.zuqiumofang_tuijian.objects
 
-        betid_list=tuijian_db.values('ID_bet007','user_id','match_id','tuijian','home','away','create_time','ranking','rc','wc','bc').filter(match_id='周四001')
+        betid_list=tuijian_db.values('ID_bet007','user_id','match_id','tuijian','home','away','create_time','ranking','rc','wc','bc').filter(match_id='周六003')
         for i in betid_list:
 
             tuijian=[]
@@ -278,10 +279,10 @@ class zuqiucaifu():
 
             value = json.loads(value)
             for j in value:
-
+                #print(j)
                 tuijian.append(toy_list[j])
             print(#i['ID_bet007'],
-                  #i['user_id'],
+                  i['user_id'],
                   i['match_id'],
                   i['home']+'VS'+i['away'],
                   #i['ID_bet007'],
@@ -298,8 +299,8 @@ class zuqiucaifu():
 
 if __name__ == "__main__":
     data=zuqiucaifu()
-    data.rankings_list()
-    data.userpostlist()
-    data.detail()
-    data.tuijian()
+    # data.rankings_list()
+    # data.userpostlist()
+    # data.detail()
+    #data.tuijian()
     data.tongji()
