@@ -118,8 +118,8 @@ class zuqiumofang_user(models.Model):
 
 class zuqiumofang_post(models.Model):
     class Meta:
-        verbose_name = '足球魔方推荐'
-        verbose_name_plural = '足球魔方推荐'
+        verbose_name = '足球财富文章列表'
+        verbose_name_plural = '足球财富文章列表'
     post_id=models.CharField(max_length=255,primary_key=True,verbose_name='推荐ID')
     user_id=models.CharField(max_length=255,null=True, blank=True,verbose_name='作者ID')
     ranking = models.IntegerField(max_length=255, null=True, blank=True, verbose_name='排名')
@@ -130,8 +130,8 @@ class zuqiumofang_post(models.Model):
 
 class zuqiumofang_tuijian(models.Model):
     class Meta:
-        verbose_name = '推荐'
-        verbose_name_plural = '推荐'
+        verbose_name = '足球财富推荐'
+        verbose_name_plural = '足球财富推荐'
 
     post_id=models.CharField(max_length=255,null=True, blank=True,verbose_name='推荐ID')
     user_id=models.CharField(max_length=255,null=True, blank=True,verbose_name='作者ID')

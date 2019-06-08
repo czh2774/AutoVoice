@@ -12,11 +12,8 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'AutoVoice.settings'  # 设置项目的�
 django.setup()
 import time,json,requests
 from ToolModel import models
-from websocket import create_connection,warning
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-from google.protobuf.json_format import MessageToJson,Parse
-from AutoVoice.example import addressbook_pb2
 
 class zuqiucaifu():
     def rankings_list(self):
@@ -299,8 +296,8 @@ class zuqiucaifu():
 
 if __name__ == "__main__":
     data=zuqiucaifu()
-    # data.rankings_list()
-    # data.userpostlist()
-    # data.detail()
+    #data.rankings_list()
+    #data.userpostlist()
+    #data.detail()
     #data.tuijian()
     data.tongji()

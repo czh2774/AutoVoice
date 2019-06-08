@@ -16,6 +16,7 @@ from ToolModel.models import log_voice
 from ToolModel.models import bifen_mofang
 from ToolModel.models import zuqiumofang_user
 from ToolModel.models import zuqiumofang_post
+from ToolModel.models import zuqiumofang_tuijian
 # Register your models here.
 
 # Blog模型的管理器
@@ -53,3 +54,7 @@ class BlogAdmin(admin.ModelAdmin):
 @admin.register(zuqiumofang_post)
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('post_id','user_id','username','content','create_time','strandlist','ranking')
+
+@admin.register(zuqiumofang_tuijian)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('post_id','user_id','match_id','home','away','ID_bet007','create_time','tuijian','ranking','rc','wc','bc')
