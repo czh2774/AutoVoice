@@ -20,7 +20,9 @@ from django.urls import path
 from django.conf.urls import url
 from django.contrib import admin
 from . import view,ToolModeldb
+from werobot.contrib.django import make_view
 
+from ToolModel.tools.robot import robot
 urlpatterns = [
     path('hello/', view.hello),
     url(r'^admin/', admin.site.urls),
@@ -32,4 +34,5 @@ urlpatterns = [
     url(r'^vipc_rid/', ToolModeldb.vipc_rid),
     url(r'^vipc_port/', ToolModeldb.vipc_port),
     url(r'^vipc_voice/', ToolModeldb.vipc_voice),
+    url(r'^robot/',make_view(robot))
 ]

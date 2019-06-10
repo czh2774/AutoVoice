@@ -145,3 +145,4 @@ class zuqiumofang_tuijian(models.Model):
     rc = models.CharField(max_length=255, null=True, blank=True, verbose_name='红')
     wc = models.CharField(max_length=255, null=True, blank=True, verbose_name='走')
     bc = models.CharField(max_length=255, null=True, blank=True, verbose_name='黑')
+    tongji=models.CharField(max_length=255, null=True, blank=True, verbose_name='推荐')
