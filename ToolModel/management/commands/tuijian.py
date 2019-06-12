@@ -5,6 +5,4 @@ class Command(BaseCommand):  # 必须继承
 
     def handle(self, *args, **options):  # 必须实现的方法 ，该方法即自定义命令执行的内容
         data=zuqiucaifu()
-        data.userpostlist()
-        data.detail()
         data.tuijian()

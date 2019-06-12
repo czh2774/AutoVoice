@@ -154,8 +154,14 @@ class zuqiucaifu():
         strandlist=post_db.values('strandlist','post_id','user_id').filter(~Q(strandlist=[]))
 
         for j in strandlist:
-            value=j['strandlist'].replace("'",'"')
-            value=json.loads(value)
+            logging.info(j)
+            try:
+                value=j['strandlist'].replace("'",'"')
+                value=json.loads(value)
+            except:
+                logging.error('没有推荐数据')
+                break
+
             for data in value:
                 if 'strandList' not in data:
                     tuijian_data = {}
@@ -166,15 +172,12 @@ class zuqiucaifu():
                     tuijian_data['away'] = data['away']
                     tuijian_data['ID_bet007'] = data['ID_bet007']
                     tuijian_data['create_time'] = data['create_time']
-
                     user_data = user_db.values('ranking', 'rc', 'wc', 'bc').filter(user_id=j['user_id'])
-
                     ranking = user_data[0]['ranking']
                     tuijian_data['ranking'] = int(ranking)
                     tuijian_data['rc'] = user_data[0]['rc']
                     tuijian_data['wc'] = user_data[0]['wc']
                     tuijian_data['bc'] = user_data[0]['bc']
-
                     tuijian_data['tuijian'] = []
                     tuijian_data['tongji']=[]
                     for i in self.toy_list_dict:
@@ -245,9 +248,9 @@ class zuqiucaifu():
 
 if __name__ == "__main__":
     data=zuqiucaifu()
-    #data.rankings_list()
-    #data.userpostlist()
-    #data.detail()
-    #data.tuijian()
-    print(data.tongji('周五002'))
-    #data.test()
+    # data.rankings_list()
+    # data.userpostlist()
+    # data.detail()
+    # data.tuijian()
+    print(data.tongji('周二003'))
+    # data.test()

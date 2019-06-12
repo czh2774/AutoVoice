@@ -152,7 +152,8 @@ CRONJOBS = [
     ('*/6 * * * *', 'django.core.management.call_command',['get_rid_list'],{}),
     ('0 0 * * *', 'django.core.management.call_command',['rankings_list'],{}),
     ('*/30 * * * *', 'django.core.management.call_command',['userpostlist'],{}),
-    ('*/20 * * * *', 'django.core.management.call_command',['detail'],{}),
+    #('*/20 * * * *', 'django.core.management.call_command',['detail'],{}),
+    #('*/5 * * * *', 'django.core.management.call_command',['tuijian'],{}),
     ]
 # EMAIL_HOST = 'smtp.qq.com'
 # EMAIL_PORT = 25
