@@ -101,10 +101,11 @@ class zuqiumofang_user(models.Model):
     class Meta:
         verbose_name = '足球财富排行榜'
         verbose_name_plural = '足球财富排行榜'
-
+        ordering=('ranking',)
     user_id =models.CharField(max_length=255,primary_key=True,verbose_name='作者ID')
     ranking = models.IntegerField(max_length=255, null=True, blank=True, verbose_name='排名')
     username = models.CharField(max_length=255, null=True, blank=True, verbose_name='作者名称')
+    nickname=models.CharField(max_length=255, null=True, blank=True, verbose_name='昵称')
     has_game=models.CharField(max_length=255,null=True,blank=True,verbose_name='？？')
     is_author=models.CharField(max_length=255,null=True,blank=True,verbose_name='？？')
     is_follow=models.CharField(max_length=255,null=True,blank=True,verbose_name='是否关注')
@@ -125,24 +126,26 @@ class zuqiumofang_post(models.Model):
     ranking = models.IntegerField(max_length=255, null=True, blank=True, verbose_name='排名')
     username = models.CharField(max_length=255, null=True, blank=True, verbose_name='作者名称')
     content=models.TextField(null=True, blank=True,verbose_name='推荐正文')
-    create_time=models.CharField(max_length=255,null=True, blank=True,verbose_name='创建时间')
+    create_time=models.DateTimeField(max_length=255,null=True, blank=True,verbose_name='创建时间')
     strandlist=models.TextField(null=True, blank=True,verbose_name='推荐单')
 
 class zuqiumofang_tuijian(models.Model):
     class Meta:
         verbose_name = '足球财富推荐'
         verbose_name_plural = '足球财富推荐'
-
-    post_id=models.CharField(max_length=255,null=True, blank=True,verbose_name='推荐ID')
+    id=models.IntegerField(max_length=255,primary_key=True,verbose_name='推荐ID')
+    post_id=models.CharField(max_length=255,null=True, blank=True,verbose_name='文章ID')
     user_id=models.CharField(max_length=255,null=True, blank=True,verbose_name='作者ID')
+    nickname=models.CharField(max_length=255,null=True, blank=True,verbose_name='作者昵称')
     match_id=models.CharField(max_length=255,null=True, blank=True,verbose_name='比赛ID')
     home=models.CharField(max_length=255,null=True, blank=True,verbose_name='主队')
     away=models.CharField(max_length=255,null=True, blank=True,verbose_name='客队')
     ID_bet007=models.CharField(max_length=255,null=True, blank=True,verbose_name='比赛ID')
-    create_time=models.CharField(max_length=255,null=True, blank=True,verbose_name='推荐时间')
-    tuijian=models.CharField(max_length=255,null=True, blank=True,verbose_name='玩法列表')
+    create_time=models.DateTimeField(null=True, blank=True,verbose_name='推荐时间')
+    tuijian=models.TextField(max_length=255,null=True, blank=True,verbose_name='玩法列表')
     ranking = models.IntegerField(max_length=255, null=True, blank=True, verbose_name='排名')
     rc = models.CharField(max_length=255, null=True, blank=True, verbose_name='红')
     wc = models.CharField(max_length=255, null=True, blank=True, verbose_name='走')
     bc = models.CharField(max_length=255, null=True, blank=True, verbose_name='黑')
     tongji=models.CharField(max_length=255, null=True, blank=True, verbose_name='推荐')
+    state=models.IntegerField( null=True, blank=True, verbose_name='结果')

@@ -19,7 +19,9 @@ def reply_msg(msg):
     try:
         if '推荐' in msg['Content']:
             print('有人请求推荐')
-            itchat.send_msg("好的，稍等",msg['FromUserName'])
+            data=zuqiucaifu()
+            data=data.tuijian_all()
+            itchat.send_msg(str(data),msg['FromUserName'])
         elif '下载' in msg['Content']:
             print('有人请求下载！')
             f="app.jpg"
