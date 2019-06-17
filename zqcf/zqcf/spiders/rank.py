@@ -22,6 +22,7 @@ class rankSpider(CrawlSpider):
             }
 
 
+
     def start_requests(self):
         yield Request(url='https://appbalance.zqcf718.com/vote/rankings',method='POST',headers=self.headers,body=json.dumps(self.body),callback=self.parse)
     def parse(self, response):
