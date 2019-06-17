@@ -350,7 +350,7 @@ if __name__ == "__main__":
     data=zuqiucaifu()
 
 
-    #data.rankings_list()
+    data.rankings_list()
     # data.userpostlist()
     #data.tuijian_post()
     # data.tuijian_commentlist()

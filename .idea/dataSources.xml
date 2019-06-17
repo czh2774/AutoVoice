@@ -33,5 +33,14 @@
         <property name="tinyInt1isBit" value="false" />
       </driver-properties>
     </data-source>
+    <data-source source="LOCAL" name="db" uuid="0c9fe86d-2711-426f-b5d0-6b72730a87e1">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:D:\workspace\python\AutoVoice\zqcf\gerapy\db.sqlite3</jdbc-url>
+      <driver-properties>
+        <property name="enable_load_extension" value="true" />
+      </driver-properties>
+    </data-source>
   </component>
 </project>
