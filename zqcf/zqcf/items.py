@@ -7,7 +7,7 @@
 
 
 from scrapy_djangoitem import DjangoItem
-from ToolModel.models import zuqiumofang_user,zuqiumofang_post,zuqiumofang_tuijian
+from toolmodel.models import zuqiumofang_user,zuqiumofang_post,zuqiumofang_tuijian
 
 class rankItem(DjangoItem):
     django_model = zuqiumofang_user

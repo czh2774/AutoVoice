@@ -4,7 +4,6 @@ import logging
 import os
 import sys
 import django
-from datetime import datetime
 import json
 from lxml import etree
 from django.db.models import Q
@@ -13,7 +12,7 @@ sys.path.append(os.path.abspath('..'))  # 将项目路径添加到系统搜寻�
 os.environ['DJANGO_SETTINGS_MODULE'] = 'AutoVoice.settings'  # 设置项目的配置文件
 django.setup()
 import time,json,requests
-from ToolModel import models
+from toolmodel import models
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
@@ -146,34 +145,6 @@ class zuqiucaifu():
     """生成推荐数据,并进入数据库
     1、清除当前数据
     2、获取数据，进入数据库"""
-    def commentlist(self):
-        db = models.zuqiumofang_post.objects
-        post_id = db.values('post_id')
-
-        url='https://appbalance.zqcf718.com/v4/post/commentlist'
-        data={
-            "params":
-                  {
-                      "post_user_id":"16515","page_num":"1",
-                      "page_size":"10","post_id":"28211",
-                      "just_look":"1","exclude_ids":[],
-                      "v":"1","platform":"android",
-                      "version_code":"8",
-                      "device_type":"1","device_id":"861759031464380","version":"2.0"}}
-        value=requests.post(url=url,headers=self.headers,json=data).text
-        value=json.loads(value)
-        value=value['data']['list']
-        for j in value:
-            # if j['gameList'] is not None:
-            #print(j)
-            if j['gameList']:
-                print(j['gameList'])
-        #print(value)
-        strandist=db.values('strandlist').filter(post_id=28211)
-        print(strandist[0]['strandlist'])
-
-
-
     def tuijian(self):
         post_db=models.zuqiumofang_post.objects
         user_db=models.zuqiumofang_user.objects
@@ -269,31 +240,8 @@ class zuqiucaifu():
         except:
             return '本场暂时没有推荐'
 
-    def tuijian_all(self):
-        tuijian_db=models.zuqiumofang_tuijian.objects
-        today=datetime.now().weekday()
-        weekday=['周一','周二','周三','周四','周五','周六','周日']
-        weekday=weekday[today]
-        #print(weekday)
-        tuijian=tuijian_db.values('match_id','create_time').filter(match_id__contains=weekday)
-        tuijian_content=[]
-        for i in tuijian:
-            if int(i['create_time']) > self.time_Difference:
-                #print(i['match_id'])
-                tuijian_content.append(i['match_id'])
-        #print(tuijian_content)
-        set01=set(tuijian_content)
-        dict01={}
-        for item in set01:
-            dict01.update({item:tuijian_content.count(item)})
-        #print(dict01)
-        value=[]
 
-        for key in dict01.keys():
-            print(key)
-            data=key+'有'+str(dict01[key])+'场推荐'
-            value.append(data)
-        return value
+
     def test(self):
         ob=models.zuqiumofang_post.objects
         tuijian=ob.all().exclude(strandlist=[]).__dict__
@@ -302,8 +250,7 @@ if __name__ == "__main__":
     data=zuqiucaifu()
     # data.rankings_list()
     # data.userpostlist()
-    # data.detail()
+    #data.detail()
     #data.tuijian()
-    data.commentlist()
-    # print(data.tongji('周二003'))
-    #print(data.tuijian_all())
+    print(data.tongji('周二003'))
+    # data.test()

@@ -22,7 +22,7 @@ from django.contrib import admin
 from . import view,ToolModeldb
 from werobot.contrib.django import make_view
 
-from ToolModel.tools.robot import robot
+from toolmodel.tools.robot import robot
 urlpatterns = [
     path('hello/', view.hello),
     url(r'^admin/', admin.site.urls),

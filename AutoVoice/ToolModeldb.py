@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
 from django.http import HttpResponse
-import ToolModel.tools.vipc
-from ToolModel.voice_vipc import voice_vipc,voice_tool
-from ToolModel import models
+import toolmodel.tools.vipc
+from toolmodel.voice_vipc import voice_vipc,voice_tool
+from toolmodel import models
 import random
 # 生成唯彩账号
 def vipc_getuser(request):
@@ -11,7 +11,7 @@ def vipc_getuser(request):
 
     for i in range(1,50):
         try:
-            ob=ToolModel.tools.vipc.vipc_data()
+            ob=toolmodel.tools.vipc.vipc_data()
             value=ob.user_reqister()
             logging.debug(value)
             dic=value

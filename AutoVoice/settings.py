@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,13 +36,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_crontab',
-    'ToolModel',
+    'toolmodel',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -55,7 +53,7 @@ ROOT_URLCONF = 'AutoVoice.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR+"/AutoVoice/templates",],
+        'DIRS': [BASE_DIR + "/AutoVoice/templates", ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -70,7 +68,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'AutoVoice.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -78,14 +75,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'autovoice',
-        'USER':'root',
-        'PASSWORD':'Leng9s9bxs',
-        'HOST':'localhost',
-        'PORT':'3306',
-        'OPTIONS': {'charset':'utf8mb4'},
+        'USER': 'root',
+        'PASSWORD': 'Leng9s9bxs',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -105,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -119,13 +114,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT  = '/home/nginx/static/'#指定样式收集目录
+STATIC_ROOT = '/home/nginx/static/'  # 指定样式收集目录
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
@@ -147,14 +140,14 @@ LOGGING = {
     },
 }
 CRONJOBS = [
-    ('*/5 * * * *', 'django.core.management.call_command',['check_ip'],{}),
-    ('*/10 * * * *', 'django.core.management.call_command',['get_ip'],{}),
-    ('*/6 * * * *', 'django.core.management.call_command',['get_rid_list'],{}),
-    ('0 0 * * *', 'django.core.management.call_command',['rankings_list'],{}),
-    ('*/30 * * * *', 'django.core.management.call_command',['userpostlist'],{}),
-    #('*/20 * * * *', 'django.core.management.call_command',['detail'],{}),
-    #('*/5 * * * *', 'django.core.management.call_command',['tuijian'],{}),
-    ]
+    ('*/5 * * * *', 'django.core.management.call_command', ['check_ip'], {}),
+    ('*/10 * * * *', 'django.core.management.call_command', ['get_ip'], {}),
+    ('*/6 * * * *', 'django.core.management.call_command', ['get_rid_list'], {}),
+    ('0 0 * * *', 'django.core.management.call_command', ['rankings_list'], {}),
+    ('*/30 * * * *', 'django.core.management.call_command', ['userpostlist'], {}),
+    # ('*/20 * * * *', 'django.core.management.call_command',['detail'],{}),
+    # ('*/5 * * * *', 'django.core.management.call_command',['tuijian'],{}),
+]
 # EMAIL_HOST = 'smtp.qq.com'
 # EMAIL_PORT = 25
 # EMAIL_HOST_USER = '9366741@qq.com' # 你的 QQ 账号
