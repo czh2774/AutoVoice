@@ -154,24 +154,24 @@ class FootballWealthRecommend(models.Model):
 
     away = models.CharField(verbose_name='客队名称', max_length=180, null=True, blank=True)  # "away":"鹿岛鹿角"
     awayScore = models.CharField(verbose_name='客队比分', max_length=180, null=True, blank=True)  # "awayScore":"3"
-    bd_yz_hjspl = models.CharField(verbose_name='北单_yz_hjspl', max_length=180, null=True,
+    bd_yz_hjspl = models.CharField(verbose_name='主受让赔率', max_length=180, null=True,
                                    blank=True)  # 'bd_yz_hjspl': '0.94'
-    bd_yz_hjspl_checked = models.IntegerField(verbose_name='北单_yz_hjspl_checked', null=True,
+    bd_yz_hjspl_checked = models.IntegerField(verbose_name='主受让', null=True,
                                               blank=True)  # 'bd_yz_hjspl_checked': 0
-    bd_yz_hjspl_red = models.IntegerField(verbose_name='北单_yz_hjspl_red', null=True, blank=True)  # 'bd_yz_hjspl_red': 0
-    bd_yz_hjspl_str = models.CharField(verbose_name='北单_yz_hjspl_str', max_length=180, null=True,
+    bd_yz_hjspl_red = models.IntegerField(verbose_name='主受让红单', null=True, blank=True)  # 'bd_yz_hjspl_red': 0
+    bd_yz_hjspl_str = models.CharField(verbose_name='主受让说明', max_length=180, null=True,
                                        blank=True)  # 'bd_yz_hjspl_str': '主让0.5'
-    bd_yz_jspk = models.CharField(verbose_name='北单_yz_jspk', max_length=180, null=True,
+    bd_yz_jspk = models.CharField(verbose_name='bd_yz_jspk', max_length=180, null=True,
                                   blank=True)  # 'bd_yz_jspk': '-0.5'
-    bd_yz_result = models.IntegerField(verbose_name='北单_yz_结果', null=True, blank=True)  # 'bd_yz_result': 2
-    bd_yz_rr = models.CharField(verbose_name='北单_yz_rr', max_length=180, null=True, blank=True)  # 'bd_yz_rr': '0'
-    bd_yz_sr = models.CharField(verbose_name='北单_yz_胜率？', max_length=180, null=True, blank=True)  # 'bd_yz_sr': '0'
-    bd_yz_wjspl = models.CharField(verbose_name='北单_yz_wjspl', max_length=180, null=True,
+    bd_yz_result = models.IntegerField(verbose_name='比赛结果', null=True, blank=True)  # 'bd_yz_result': 2
+    bd_yz_rr = models.CharField(verbose_name='bd_yz_rr', max_length=180, null=True, blank=True)  # 'bd_yz_rr': '0'
+    bd_yz_sr = models.CharField(verbose_name='bd_yz_sr', max_length=180, null=True, blank=True)  # 'bd_yz_sr': '0'
+    bd_yz_wjspl = models.CharField(verbose_name='客受让赔率', max_length=180, null=True,
                                    blank=True)  # 'bd_yz_wjspl': '0.94'
-    bd_yz_wjspl_checked = models.IntegerField(verbose_name='北单_yz_wjspl_checked', null=True,
+    bd_yz_wjspl_checked = models.IntegerField(verbose_name='客受让', null=True,
                                               blank=True)  # 'bd_yz_wjspl_checked': 1
-    bd_yz_wjspl_red = models.IntegerField(verbose_name='北单_yz_wjspl_red', null=True, blank=True)  # 'bd_yz_wjspl_red': 0
-    bd_yz_wjspl_str = models.CharField(verbose_name='亚盘盘口？', max_length=180, null=True,
+    bd_yz_wjspl_red = models.IntegerField(verbose_name='客受让红单', null=True, blank=True)  # 'bd_yz_wjspl_red': 0
+    bd_yz_wjspl_str = models.CharField(verbose_name='客受让说明', max_length=180, null=True,
                                        blank=True)  # 'bd_yz_wjspl_str': '客受让0.5'
     chapter_count = models.IntegerField(verbose_name='chapter_count', null=True, blank=True)  # 'chapter_count': 1
     check_rr = models.CharField(verbose_name='check_rr', max_length=180, null=True, blank=True)  # 'check_rr': '0.00'
@@ -208,12 +208,13 @@ class FootballWealthRecommend(models.Model):
                                  blank=True)  # "ID_bet007":"1767712"
     is_end = models.IntegerField(verbose_name='比赛是否结束', null=True, blank=True)  # "is_end":1
     is_show = models.IntegerField(verbose_name='是否显示', null=True, blank=True)  # 'is_show': 1
-    league = models.CharField(verbose_name='比赛日期', max_length=180, null=True, blank=True)  # "league":"日联杯"
+    league = models.CharField(verbose_name='联赛', max_length=180, null=True, blank=True)  # "league":"日联杯"
     letball = models.CharField(verbose_name='让球', max_length=180, null=True, blank=True)  # "letball":"让球"
     match_id = models.CharField(verbose_name='比赛场次', max_length=180, null=True, blank=True)  # "match_id":"周三002"
     match_time1 = models.CharField(verbose_name='比赛日期', max_length=180, null=True, blank=True)  # 'match_time1': '09/04'
     match_time2 = models.CharField(verbose_name='比赛小时', max_length=180, null=True, blank=True)  # 'match_time2': '02:45'
-    MatchTimeStamp = models.CharField(verbose_name='比赛时间',max_length=180, null=True, blank=True, )  # "MatchTimeStamp":1567593000000
+    MatchTimeStamp = models.CharField(verbose_name='比赛时间', max_length=180, null=True,
+                                      blank=True, )  # "MatchTimeStamp":1567593000000
     op_is_end = models.IntegerField(verbose_name='？？？', null=True, blank=True)  # 'op_is_end': 1
     post_id = models.IntegerField(verbose_name='推荐所属文章ID', null=True, blank=True)  # "post_id":72317
     rq_goal = models.CharField(verbose_name='让球数', max_length=180, null=True, blank=True)  # "rq_goal":"+1"
@@ -258,5 +259,22 @@ class FootballWealthRecommend(models.Model):
     state = models.IntegerField(verbose_name='推荐结果', null=True, blank=True)  # "state":-1
     strand_id = models.IntegerField(verbose_name='串ID', null=True, blank=True)  # "strand_id":24055
     user_id = models.IntegerField(verbose_name='作者ID', null=True, blank=True)  # "user_id":151525
-    yz_desc = models.CharField(verbose_name='亚盘玩法？', max_length=180, null=True, blank=True)  # 'yz_desc': '亚盘'
+    yz_desc = models.CharField(verbose_name='亚盘', max_length=180, null=True, blank=True)  # 'yz_desc': '亚盘'
     yz_is_end = models.IntegerField(verbose_name='yz_is_end', null=True, blank=True)  # 'yz_is_end': 1
+
+
+class FootballWealthResolution(models.Model):
+    class Meta:
+        verbose_name = '足球财富推荐解析'
+        verbose_name_plural = '足球财富推荐解析'
+
+    id = models.IntegerField(primary_key=True, verbose_name='推荐ID')
+    user_id = models.IntegerField(null=True, blank=True, verbose_name='作者ID')
+    username = models.CharField(max_length=180, null=True, blank=True, verbose_name='作者名称')
+    rr = models.CharField(max_length=180, null=True, blank=True, verbose_name='周返还率')
+    sr = models.CharField(max_length=180, null=True, blank=True, verbose_name='周胜率')
+    vote_number = models.IntegerField(null=True, blank=True, verbose_name='票数')
+    post_id = models.IntegerField(null=True, blank=True, verbose_name='推荐ID')
+    content = models.TextField(null=True, blank=True, verbose_name='推荐正文')
+    create_time = models.CharField(max_length=180, null=True, blank=True, verbose_name='创建时间')
+    recommended_str = models.CharField(max_length=180, null=True, blank=True, verbose_name='推荐内容')

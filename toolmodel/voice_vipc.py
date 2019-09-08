@@ -6,33 +6,38 @@ import os
 import sys
 import django
 
-
 import threading
+
 sys.path.append(os.path.abspath('..'))  # 将项目路径添加到系统搜寻路径当中
 os.environ['DJANGO_SETTINGS_MODULE'] = 'AutoVoice.settings'  # 设置项目的配置文件
 django.setup()
-import time,json,requests
+import time, json, requests
 from toolmodel import models
-from websocket import create_connection,warning
+
+# from websocket import create_connection,warning
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 import random
 
-
 """创建异常类"""
+
+
 class Networkerror(RuntimeError):
     def __init__(self, arg):
         self.args = arg
 
+
 """喊话器支持工具"""
+
+
 class voice_tool():
     def get_ip(self):
         """获取代理IP"""
-        ob=models.proxyip.objects
+        ob = models.proxyip.objects
         logging.info('开始获取代理IP')
         try:
-            url = 'http://api3.xiguadaili.com/ip/?'
-            param = {'tid': 559360710665118,
+            url = ' http://tpv.daxiangdaili.com/ip/?'
+            param = {'tid': 556575989958649,
                      'num': 100,
                      'delay': 50,
                      'category': 2,
@@ -47,7 +52,7 @@ class voice_tool():
             logging.warning('请求获取代理失败,重新请求')
             self.get_ip()
         logging.info('获取代理IP成功 %s', data)
-        data=json.loads(data)
+        data = json.loads(data)
 
         for proxy in data:
             logging.info(proxy)
@@ -57,22 +62,20 @@ class voice_tool():
                 'http': proxy_host_http,
                 'https': proxy_host_https
             }
-            proxy_http_http=str(proxy_http_http).replace("'",'"')
-            proxy['proxy_http_http']=proxy_http_http
+            proxy_http_http = str(proxy_http_http).replace("'", '"')
+            proxy['proxy_http_http'] = proxy_http_http
 
             logging.info(proxy)
             ob.create(**proxy)
 
-
-
     def check_ip(self):
         """检查代理IP高匿性"""
-        ob=models.proxyip.objects
-        data=ob.all()
-        p=''
+        ob = models.proxyip.objects
+        data = ob.all()
+        p = ''
         for proxy in data:
-            proxy_http_http=proxy.proxy_http_http
-            proxy_http_http=json.loads(proxy_http_http)
+            proxy_http_http = proxy.proxy_http_http
+            proxy_http_http = json.loads(proxy_http_http)
 
             try:
 
@@ -102,7 +105,10 @@ class voice_tool():
                 target.delete()
                 pass
 
+
 """获取房间列表工具"""
+
+
 class rid_list():
     def match_list(self):
 
@@ -110,17 +116,17 @@ class rid_list():
         try:
             logging.info('开始获取比赛数据')
             url = 'https://i-live.vipc.cn/api/home/v2/football/date/today/next'
-            headers = {'If-None-Match': 'W/"1a8b-6BaO4mqgB5V9sw1WDfNMBJ2Obqc"',  'Host': 'i-live.vipc.cn',
-                      'Connection': 'close', 'Accept-Encoding': 'gzip, deflate', 'User-Agent': 'gzip'}
-            data=requests.get(url=url,headers=headers)
-            data=data.text
-            #logging.info(data)
-            data=json.loads(data)
-            data=data['items']
+            headers = {'If-None-Match': 'W/"1a8b-6BaO4mqgB5V9sw1WDfNMBJ2Obqc"', 'Host': 'i-live.vipc.cn',
+                       'Connection': 'close', 'Accept-Encoding': 'gzip, deflate', 'User-Agent': 'gzip'}
+            data = requests.get(url=url, headers=headers)
+            data = data.text
+            # logging.info(data)
+            data = json.loads(data)
+            data = data['items']
             data.pop(0)
-            match_list_data=[]
+            match_list_data = []
             for i in data:
-                i=i['matches']
+                i = i['matches']
                 for j in i:
                     logging.debug(j)
                     match_list_data.append(j['model']['matchId'])
@@ -131,19 +137,19 @@ class rid_list():
 
     def get_rid_list(self):
         """"获取直播间数据"""
-        match_list=self.match_list()
+        match_list = self.match_list()
         logging.info('准备获取直播间数据')
         logging.debug(match_list)
-        rid = {}#rid数据
+        rid = {}  # rid数据
         count = 0
-        rid_count=0
-        ob=models.rid.objects
+        rid_count = 0
+        ob = models.rid.objects
         ob.all().delete()
         for j in match_list:
-            logging.debug('目标%s',j)
+            logging.debug('目标%s', j)
             try:
                 logging.debug(j)
-                url = 'https://i-live.vipc.cn/api/football/'+str(j)
+                url = 'https://i-live.vipc.cn/api/football/' + str(j)
                 headers = {'If-None-Match': 'W/"511-0OHFh71eTNfzg6vgrBMPmyFurtc"', 'Host': 'i-live.vipc.cn',
                            'Connection': 'close', 'Accept-Encoding': 'gzip, deflate', 'User-Agent': 'gzip'}
                 data = json.loads(requests.get(url=url, headers=headers).text)
@@ -151,14 +157,14 @@ class rid_list():
                 logging.warning('获取%s直播间数据出错,继续下一个', j)
                 continue
                 # self.get_rid_list()
-            logging.debug('直播间数据：%s',data)
+            logging.debug('直播间数据：%s', data)
             count = count + 1
-            if 'room' in data and 'endTime' not in data['room'] and data['room']['chatCount']>20:
-                rid['rid']=data['room']['_id']
-                rid['chatCount']=data['room']['chatCount']
-                rid['home']=data['model']['home']
-                rid['guest']=data['model']['guest']
-                rid_count=rid_count+1
+            if 'room' in data and 'endTime' not in data['room'] and data['room']['chatCount'] > 20:
+                rid['rid'] = data['room']['_id']
+                rid['chatCount'] = data['room']['chatCount']
+                rid['home'] = data['model']['home']
+                rid['guest'] = data['model']['guest']
+                rid_count = rid_count + 1
                 try:
                     ob.get(rid=rid['rid'])
                     logging.info('有这个数据')
@@ -169,14 +175,19 @@ class rid_list():
 
             logging.info('本次需要获取直播间数据%s,当前已获取%s', len(match_list), count)
 
-        logging.info('本次获取直播间数据数据%d',rid_count)
-        if rid_count==0:
-            logging.info('本次数据获取为%s,重新获取',rid_count)
+        logging.info('本次获取直播间数据数据%d', rid_count)
+        if rid_count == 0:
+            logging.info('本次数据获取为%s,重新获取', rid_count)
             self.get_rid_list()
+
+
 """喊话器主函数"""
+
+
 class voice_vipc():
     closure = 0  # 是否被封号
     """获取mobile,cookie函数"""
+
     def mobile_cookie_get(self):
         logging.info('开始初始化数据')
         ob = models.user.objects
@@ -184,9 +195,9 @@ class voice_vipc():
 
         """获取一个未使用的，还活着的cookies"""
         cookie_ob = ob.all().first()
-        count_mobile=0
-        while count_mobile<5:
-            logging.info('正在从数据库第%d次获取mobile和cookies',count_mobile)
+        count_mobile = 0
+        while count_mobile < 5:
+            logging.info('正在从数据库第%d次获取mobile和cookies', count_mobile)
             if cookie_ob:
                 mobile = cookie_ob.mobile
                 cookies = {}
@@ -203,26 +214,27 @@ class voice_vipc():
                 break
             else:
                 logging.error('没有mobile可用了')
-        return mobile,cookies
+        return mobile, cookies
 
     """喊话器主函数"""
+
     def voice_room(self):
         """确定models"""
-        ob_note_list=models.note.objects
-        ob_rid_list=models.rid.objects
-        ob_proxy_list=models.proxyip.objects
-        ob_user_list=models.user.objects
-        ob_log_list=models.log_voice.objects
+        ob_note_list = models.note.objects
+        ob_rid_list = models.rid.objects
+        ob_proxy_list = models.proxyip.objects
+        ob_user_list = models.user.objects
+        ob_log_list = models.log_voice.objects
         """获取直播间数据"""
-        rid_list=[]
-        count_rid=0
+        rid_list = []
+        count_rid = 0
 
-        while count_rid<240:
+        while count_rid < 240:
             count_rid = count_rid + 1
             try:
 
                 rid_list = ob_rid_list.all()  # 获取直播间列表
-                logging.info('从数据库中获取直播间数据第%s次',count_rid)
+                logging.info('从数据库中获取直播间数据第%s次', count_rid)
                 if rid_list:
                     break
                 else:
@@ -231,11 +243,11 @@ class voice_vipc():
             except:
                 logging.error('获取直播间数据失败')
                 break
-        logging.info('目标直播间%d个，列表%s',len(rid_list), rid_list)
+        logging.info('目标直播间%d个，列表%s', len(rid_list), rid_list)
         """获取mobile和cookie数"""
         mobile_cookie = {}
-        mobile_cookie=self.mobile_cookie_get()#获取本次使用的mobile和cookie
-        logging.info('本次使用的mobile,cookie %s',mobile_cookie)
+        mobile_cookie = self.mobile_cookie_get()  # 获取本次使用的mobile和cookie
+        logging.info('本次使用的mobile,cookie %s', mobile_cookie)
         cookie = ('; uid=' + mobile_cookie[1]['; uid']
                   + '; utk=' + mobile_cookie[1]['utk']
                   + '; nutk=' + mobile_cookie[1]['nutk']
@@ -243,11 +255,9 @@ class voice_vipc():
                   + '; imei=865166026327588; app=vipc-android; chnl=officer; ver=5.6.4;')
         """获取话术数据"""
 
-        note_ob_list=ob_note_list.all().filter(isdead=None)
+        note_ob_list = ob_note_list.all().filter(isdead=None)
 
-        logging.info('本次使用的广告语列表%s,广告语数量%d',type(note_ob_list),len(note_ob_list))
-
-
+        logging.info('本次使用的广告语列表%s,广告语数量%d', type(note_ob_list), len(note_ob_list))
 
         """对所有房间进行喊话"""
 
@@ -260,15 +270,15 @@ class voice_vipc():
             effect_log['note_list'] = []
             effect_log['send_list'] = []
 
-            effect_log['user']=''
+            effect_log['user'] = ''
             """初始化本轮话术"""
-            note_ob=note_ob_list[random.randint(0,len(note_ob_list)-1)]
-            note_list=[note_ob.note1,note_ob.note2,note_ob.note3,note_ob.note4]
+            note_ob = note_ob_list[random.randint(0, len(note_ob_list) - 1)]
+            note_list = [note_ob.note1, note_ob.note2, note_ob.note3, note_ob.note4]
             effect_log['user'] = note_ob.user
 
             """本次喊话目标"""
             logging.info('本次喊话目标主 %s，客 %s，直播间人数%s,rid %s', j.home, j.guest, j.chatCount, j.rid)
-            logging.info('本次喊话话术%s',note_list)
+            logging.info('本次喊话话术%s', note_list)
 
             for i in range(5):
                 try:
@@ -283,25 +293,26 @@ class voice_vipc():
                     continue
                 try:
                     ws = create_connection(
-                                            "ws://live.vipc.cn/socket.io/?EIO=3&transport=websocket",
-                                            cookie=cookie,
-                                            http_proxy_host=proxy.host,
-                                            http_proxy_port=proxy.port,
-                                            timeout=60
-                                            )
+                        "ws://live.vipc.cn/socket.io/?EIO=3&transport=websocket",
+                        cookie=cookie,
+                        http_proxy_host=proxy.host,
+                        http_proxy_port=proxy.port,
+                        timeout=60
+                    )
                     break
                 except:
-                    logging.info('连接房间失败，重试第%d次,删除代理%s',int(i+1),str(proxy.host))
+                    logging.info('连接房间失败，重试第%d次,删除代理%s', int(i + 1), str(proxy.host))
                     proxy.delete()
 
-                    ob_log_list.create(**{'log_title':'代理超时删除代理','log_data':str(proxy.host)})
+                    ob_log_list.create(**{'log_title': '代理超时删除代理', 'log_data': str(proxy.host)})
 
             """发送进入房间数据"""
             ws.send('40/live,')
-            ws.send('42/live,["\/room\/enter",{"rid":"'+j.rid+'"}]')
+            ws.send('42/live,["\/room\/enter",{"rid":"' + j.rid + '"}]')
             ws.send('2')
-            effect_log['rid_list']={'home': j.home, 'guest': j.guest}
+            effect_log['rid_list'] = {'home': j.home, 'guest': j.guest}
             """心跳线程函数"""
+
             def live_voice(threadName, delay):
                 logging.info('开始心跳')
                 for i in range(5):
@@ -310,35 +321,37 @@ class voice_vipc():
                     time.sleep(delay)
 
             """接收数据函数"""
-            def result_voict(threadName,delay):
+
+            def result_voict(threadName, delay):
                 logging.info('开始接收数据')
-                count=0
+                count = 0
                 try:
-                    while count<30:
+                    while count < 30:
                         time.sleep(delay)
-                        result=ws.recv()
+                        result = ws.recv()
                         if result:
-                            count=count+1
-                            logging.info('目前已接收%s,接收信息%s',count,result)
+                            count = count + 1
+                            logging.info('目前已接收%s,接收信息%s', count, result)
 
                             for l in note_list:
                                 """检查"""
-                                if  '42/live,["/chat/message"'in result and str(l) in result:
+                                if '42/live,["/chat/message"' in result and str(l) in result:
                                     logging.info(result)
                                     effect_log['note_list'].append(l)
-                                    logging.info('成功发出文字列表%s',str(effect_log['note_list']))
+                                    logging.info('成功发出文字列表%s', str(effect_log['note_list']))
 
-                            if '抱歉，您的评论内容涉嫌违规，已被禁止发表评论'  in result:
-                                logging.info('出错, %s已被封禁,%s代理已被封禁，删除重新开始',  mobile_cookie[0], proxy.host)
+                            if '抱歉，您的评论内容涉嫌违规，已被禁止发表评论' in result:
+                                logging.info('出错, %s已被封禁,%s代理已被封禁，删除重新开始', mobile_cookie[0], proxy.host)
 
                                 ob_user_list.all().filter(mobile=mobile_cookie[0]).delete()
                                 ob_log_list.create(**{'log_title': '账号被封，删除手机数据', 'log_data': str(mobile_cookie[0])})
                                 ob_proxy_list.all().filter(host=proxy.host).delete()
-                                ob_log_list.create(**{'log_title': '账号被封，删除代理数据', 'log_data': str(proxy.host+':'+proxy.port)})
+                                ob_log_list.create(
+                                    **{'log_title': '账号被封，删除代理数据', 'log_data': str(proxy.host + ':' + proxy.port)})
                                 raise Networkerror('isdead_user')
 
                             if '直播间不存在或已结束' in result:
-                                logging.info("%s 对阵 %s 的直播间已经结束",j.home,j.guest)
+                                logging.info("%s 对阵 %s 的直播间已经结束", j.home, j.guest)
                                 raise Networkerror('直播间已经结束')
                                 ws.close()
                     logging.info('接收数据超过上限，关闭连接')
@@ -353,29 +366,32 @@ class voice_vipc():
                 ws.close()
 
             """发送广告线程"""
-            def note_voice(threadName,delay):
 
-                send_sequence=0
+            def note_voice(threadName, delay):
+
+                send_sequence = 0
                 for k in note_list:
                     if k:
-                        send_cookie={}
-                        send_cookie['uid']=mobile_cookie[1]['; uid']
-                        send_cookie['utk']=mobile_cookie[1]['utk']
-                        send_cookie['vid']="5bdb38a79e2238001a3d0511"
-                        send_cookie['rid']=j.rid
-                        send_cookie['t']=0
-                        send_cookie['c']={'m':k}
-                        send_str='42/live,'+str(send_sequence)+'["\/chat\/message\/create",'+str(send_cookie)+']'
-                        send_str=send_str.replace("'",'"')
+                        send_cookie = {}
+                        send_cookie['uid'] = mobile_cookie[1]['; uid']
+                        send_cookie['utk'] = mobile_cookie[1]['utk']
+                        send_cookie['vid'] = "5bdb38a79e2238001a3d0511"
+                        send_cookie['rid'] = j.rid
+                        send_cookie['t'] = 0
+                        send_cookie['c'] = {'m': k}
+                        send_str = '42/live,' + str(send_sequence) + '["\/chat\/message\/create",' + str(
+                            send_cookie) + ']'
+                        send_str = send_str.replace("'", '"')
                         time.sleep(10)
-                        logging.info('发送广告%s',send_str)
+                        logging.info('发送广告%s', send_str)
                         send_sequence = send_sequence + 1
                         ws.send(send_str)
                         effect_log['send_list'].append(k)
                         time.sleep(delay)
+
             """启动线程"""
-            s1=threading.Thread(target=result_voict,args=('接收',0.2))
-            s2=threading.Thread(target=live_voice,args=("心跳包", 25))
+            s1 = threading.Thread(target=result_voict, args=('接收', 0.2))
+            s2 = threading.Thread(target=live_voice, args=("心跳包", 25))
             s3 = threading.Thread(target=note_voice, args=("发送广告", 4))
             s1.start()
             s2.start()
@@ -386,11 +402,7 @@ class voice_vipc():
             """输出结果到日志"""
             ob_log_list.create(**{'log_title': '喊话', 'log_data': str(effect_log)})
 
-
-
         self.voice_room()
-
-
 
 
 if __name__ == "__main__":
@@ -399,7 +411,7 @@ if __name__ == "__main__":
     # ob_proxy_list = models.proxyip.objects
     # ob_user_list = models.user.objects
     ob_log_list = models.log_voice.objects
-    data=voice_tool()
+    data = voice_tool()
     data.get_ip()
     data.check_ip()
     # ob_rid_list = models.rid.objects
@@ -409,5 +421,5 @@ if __name__ == "__main__":
     # ob_rid_list = models.rid.objects
     # rid_list = ob_rid_list.all()  # 获取直播间列表
     # logging.info(rid_list)
-    #ob_user_list=models.user.objects
-    #ob_user_list.all().filter(mobile=13945894862).delete()
+    # ob_user_list=models.user.objects
+    # ob_user_list.all().filter(mobile=13945894862).delete()
