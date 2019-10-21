@@ -1,4 +1,4 @@
-#!D:\workspace\python\AutoVoice\venv\Scripts\python.exe
+#!C:\Users\Administrator\PycharmProjects\AutoVoice\venv\Scripts\python.exe
 
 import argparse
 import code

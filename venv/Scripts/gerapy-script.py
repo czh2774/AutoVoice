@@ -1,4 +1,4 @@
-#!D:\workspace\python\AutoVoice\venv\Scripts\python.exe
+#!C:\Users\Administrator\PycharmProjects\AutoVoice\venv\Scripts\python.exe
 # EASY-INSTALL-ENTRY-SCRIPT: 'gerapy==0.8.5','console_scripts','gerapy'
 __requires__ = 'gerapy==0.8.5'
 import re

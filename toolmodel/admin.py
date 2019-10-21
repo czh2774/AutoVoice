@@ -9,6 +9,10 @@ from toolmodel.models import bifen_mofang
 from toolmodel.models import FootballWealthUser
 from toolmodel.models import FootballWealthPost
 from toolmodel.models import FootballWealthRecommend
+from toolmodel.models import FootballWealthResolution
+from django.forms import TextInput, Textarea
+from django.db import models
+from django import forms
 
 
 # Register your models here.
@@ -78,4 +82,11 @@ class BlogAdmin(admin.ModelAdmin):
                     "sf_sf1", "sf_sf1_checked", "sf_sf1_red", "sf_sf3", "sf_sf3_checked", "sf_sf3_red", "sort",
                     "spf_goal", "spf_result", "spf_rr", "spf_sf0", "spf_sf0_checked", "spf_sf0_red", "spf_sf1",
                     "spf_sf1_checked", "spf_sf1_red", "spf_sf3", "spf_sf3_checked", "spf_sf3_red", "spf_sr", "sr",
-                    "state", "strand_id", "user_id", "yz_desc", "yz_is_end" ]
+                    "state", "strand_id", "user_id", "yz_desc", "yz_is_end"]
+
+
+@admin.register(FootballWealthResolution)
+class FootballWealthResolutionAdmin(admin.ModelAdmin):
+    list_display = (
+        'id', 'user_id', 'post_id', 'username', 'recommended_str', 'content', 'vote_number', 'create_time', 'rr', 'sr')
+    search_fields = ['recommended_str', 'username']

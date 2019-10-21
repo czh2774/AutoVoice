@@ -8,7 +8,7 @@ class user(models.Model):
         verbose_name = '唯彩账号'
         verbose_name_plural = '唯彩账号'
 
-    mobile = models.IntegerField(verbose_name='手机号')
+    mobile = models.BigIntegerField(verbose_name='手机号')
     password = models.CharField(max_length=180, verbose_name='密码')
     isuse = models.CharField(max_length=180)
     isdead = models.IntegerField(verbose_name='是否死亡')
@@ -220,27 +220,27 @@ class FootballWealthRecommend(models.Model):
     rq_goal = models.CharField(verbose_name='让球数', max_length=180, null=True, blank=True)  # "rq_goal":"+1"
     rq_rq0 = models.CharField(verbose_name='让球负赔率', max_length=180, null=True, blank=True)  # "rq_rq0":"4.30"
     rq_rq0_checked = models.IntegerField(verbose_name='让球负检查', null=True, blank=True)  # "rq_rq0_checked":0
-    rq_rq0_red = models.IntegerField(verbose_name='让球负red', null=True, blank=True)  # "rq_rq0_red":0
+    rq_rq0_red = models.IntegerField(verbose_name='让球负中了', null=True, blank=True)  # "rq_rq0_red":0
     rq_rq1 = models.CharField(verbose_name='让球平赔率', max_length=180, null=True, blank=True)  # "rq_rq1":"3.80"
     rq_rq1_checked = models.IntegerField(verbose_name='让球平检查', null=True, blank=True)  # "rq_rq1_checked":0
-    rq_rq1_red = models.IntegerField(verbose_name='让球平red', null=True, blank=True)  # "rq_rq1_red":0
+    rq_rq1_red = models.IntegerField(verbose_name='让球平中了', null=True, blank=True)  # "rq_rq1_red":0
     rq_rq3 = models.CharField(verbose_name='让球胜赔率', max_length=180, null=True, blank=True)  # "rq_rq3":"1.51"
     rq_rq3_checked = models.IntegerField(verbose_name='让球胜检查', null=True, blank=True)  # "rq_rq3_checked":0
-    rq_rq3_red = models.IntegerField(verbose_name='让球胜red', null=True, blank=True)  # "rq_rq3_red":0
+    rq_rq3_red = models.IntegerField(verbose_name='让球胜中了', null=True, blank=True)  # "rq_rq3_red":0
     rq_sf_result = models.IntegerField(verbose_name='让球胜负结果', null=True, blank=True)  # "rq_sf_result":1
     rq_sf_rr = models.CharField(verbose_name='让球胜率', max_length=180, null=True, blank=True)  # "rq_sf_rr":"0"
     rq_sf_sr = models.CharField(verbose_name='让球胜率', max_length=180, null=True, blank=True)  # "rq_sf_sr":"100.00"
-    rr = models.CharField(verbose_name='rr', max_length=180, null=True, blank=True)  # 'rr': '0'
+    rr = models.CharField(verbose_name='周返还率', max_length=180, null=True, blank=True)  # 'rr': '0'
     sf_goal = models.CharField(verbose_name='胜平负让球数', max_length=180, null=True, blank=True)  # "sf_goal":"0"
     sf_sf0 = models.CharField(verbose_name='胜平负负', max_length=180, null=True, blank=True)  # "sf_sf0":"2.10"
     sf_sf0_checked = models.IntegerField(verbose_name='胜平负负检查', null=True, blank=True)  # "sf_sf0_checked":1
-    sf_sf0_red = models.IntegerField(verbose_name='胜平负负red', null=True, blank=True)  # "sf_sf0_red":1
+    sf_sf0_red = models.IntegerField(verbose_name='胜平负负中了', null=True, blank=True)  # "sf_sf0_red":1
     sf_sf1 = models.CharField(verbose_name='胜平负平赔率', max_length=180, null=True, blank=True)  # "sf_sf1":"3.35"
     sf_sf1_checked = models.IntegerField(verbose_name='胜平负平检查', null=True, blank=True)  # "sf_sf1_checked":1
-    sf_sf1_red = models.IntegerField(verbose_name='胜平负平red', null=True, blank=True)  # "sf_sf1_red":0
+    sf_sf1_red = models.IntegerField(verbose_name='胜平负平中了', null=True, blank=True)  # "sf_sf1_red":0
     sf_sf3 = models.CharField(verbose_name='胜平负胜赔率', max_length=180, null=True, blank=True)  # "sf_sf3":"2.60"
     sf_sf3_checked = models.IntegerField(verbose_name='胜负胜检查', null=True, blank=True)  # "sf_sf3_checked":0
-    sf_sf3_red = models.IntegerField(verbose_name='胜平负胜red', null=True, blank=True)  # "sf_sf3_red":0
+    sf_sf3_red = models.IntegerField(verbose_name='胜平负胜中了', null=True, blank=True)  # "sf_sf3_red":0
     sort = models.IntegerField(verbose_name='分类', null=True, blank=True)  # "sort":277
     spf_goal = models.CharField(verbose_name='胜平负_goal', max_length=180, null=True, blank=True)  # 'spf_goal': '0'
     spf_result = models.IntegerField(verbose_name='胜平负结果', null=True, blank=True)  # 'spf_result': 0
@@ -267,6 +267,7 @@ class FootballWealthResolution(models.Model):
     class Meta:
         verbose_name = '足球财富推荐解析'
         verbose_name_plural = '足球财富推荐解析'
+        ordering = ('-create_time',)
 
     id = models.IntegerField(primary_key=True, verbose_name='推荐ID')
     user_id = models.IntegerField(null=True, blank=True, verbose_name='作者ID')
@@ -274,7 +275,7 @@ class FootballWealthResolution(models.Model):
     rr = models.CharField(max_length=180, null=True, blank=True, verbose_name='周返还率')
     sr = models.CharField(max_length=180, null=True, blank=True, verbose_name='周胜率')
     vote_number = models.IntegerField(null=True, blank=True, verbose_name='票数')
-    post_id = models.IntegerField(null=True, blank=True, verbose_name='推荐ID')
+    post_id = models.IntegerField(null=True, blank=True, verbose_name='文章ID')
     content = models.TextField(null=True, blank=True, verbose_name='推荐正文')
     create_time = models.CharField(max_length=180, null=True, blank=True, verbose_name='创建时间')
     recommended_str = models.CharField(max_length=180, null=True, blank=True, verbose_name='推荐内容')

@@ -7,7 +7,7 @@ import sys
 import django
 
 import threading
-
+from websocket import create_connection
 sys.path.append(os.path.abspath('..'))  # 将项目路径添加到系统搜寻路径当中
 os.environ['DJANGO_SETTINGS_MODULE'] = 'AutoVoice.settings'  # 设置项目的配置文件
 django.setup()
@@ -36,8 +36,8 @@ class voice_tool():
         ob = models.proxyip.objects
         logging.info('开始获取代理IP')
         try:
-            url = ' http://tpv.daxiangdaili.com/ip/?'
-            param = {'tid': 556575989958649,
+            url = 'http://api3.xiguadaili.com/ip/?'
+            param = {'tid': 557103946283937,
                      'num': 100,
                      'delay': 50,
                      'category': 2,
@@ -252,7 +252,7 @@ class voice_vipc():
                   + '; utk=' + mobile_cookie[1]['utk']
                   + '; nutk=' + mobile_cookie[1]['nutk']
                   + '; vid=' + mobile_cookie[1]['vid']
-                  + '; imei=865166026327588; app=vipc-android; chnl=officer; ver=5.6.4;')
+                  + '; imei=865166026327588; app=vipc-android; chnl=Vipc-MTwdj; ver=5.7.3;')
         """获取话术数据"""
 
         note_ob_list = ob_note_list.all().filter(isdead=None)
@@ -282,12 +282,9 @@ class voice_vipc():
 
             for i in range(5):
                 try:
-
                     proxy = ob_proxy_list.filter(hiding=1).first()
                     logging.info('本次使用的代理是%s:%s', proxy.host, proxy.port)
                     logging.info('准备进入直播间 %s对 %s，直播间人数%s,rid %s', j.home, j.guest, j.chatCount, j.rid)
-
-
                 except:
                     logging.info('获取代理出错')
                     continue

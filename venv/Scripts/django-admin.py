@@ -1,4 +1,4 @@
-#!D:\workspace\python\AutoVoice\venv\Scripts\python.exe
+#!C:\Users\Administrator\PycharmProjects\AutoVoice\venv\Scripts\python.exe
 from django.core import management
 
 if __name__ == "__main__":
