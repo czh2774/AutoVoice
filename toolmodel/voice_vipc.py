@@ -326,6 +326,7 @@ class voice_vipc():
                     while count < 30:
                         time.sleep(delay)
                         result = ws.recv()
+                        logging.info(result)
                         if result:
                             count = count + 1
                             logging.info('目前已接收%s,接收信息%s', count, result)
@@ -392,10 +393,10 @@ class voice_vipc():
             s3 = threading.Thread(target=note_voice, args=("发送广告", 4))
             s1.start()
             s2.start()
-            s3.start()
+            # s3.start()
             s1.join()
             s2.join()
-            s3.join()
+            # s3.join()
             """输出结果到日志"""
             ob_log_list.create(**{'log_title': '喊话', 'log_data': str(effect_log)})
 
@@ -407,16 +408,16 @@ if __name__ == "__main__":
     # ob_rid_list = models.rid.objects
     # ob_proxy_list = models.proxyip.objects
     # ob_user_list = models.user.objects
-    ob_log_list = models.log_voice.objects
+    # ob_log_list = models.log_voice.objects
     data = voice_tool()
     data.get_ip()
     data.check_ip()
-    # ob_rid_list = models.rid.objects
+    ob_rid_list = models.rid.objects
 
-    # room=rid_list()
-    # room.get_rid_list()
-    # ob_rid_list = models.rid.objects
-    # rid_list = ob_rid_list.all()  # 获取直播间列表
+    room=rid_list()
+    room.get_rid_list()
+    ob_rid_list = models.rid.objects
+    rid_list = ob_rid_list.all()  # 获取直播间列表
     # logging.info(rid_list)
     # ob_user_list=models.user.objects
     # ob_user_list.all().filter(mobile=13945894862).delete()
